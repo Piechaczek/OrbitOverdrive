@@ -62,5 +62,10 @@ public class Rocket : MonoBehaviour
             Destroy(coin.gameObject);
         }
 
+        Obstacle obstacle = colider.gameObject.GetComponent<Obstacle>();
+        if (obstacle != null) {
+            Destroy(gameObject);
+        }
+
     }
 }
