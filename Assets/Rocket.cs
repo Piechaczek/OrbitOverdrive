@@ -30,7 +30,7 @@ public class Rocket : MonoBehaviour
         }
         
         float angle = Mathf.Atan2(rb.velocity.y, rb.velocity.x);
-        transform.localEulerAngles = new Vector3(0.0f, 0.0f, angle * 180.0f / Mathf.PI);
+        transform.localEulerAngles = new Vector3(0.0f, 0.0f, angle * 180.0f / Mathf.PI - 90.0f);
         rb.AddForce(new Vector2(speed*Mathf.Cos(angle), speed*Mathf.Sin(angle)));
 
         // Vector3 diff = blackHole.transform.position - transform.position;
@@ -52,20 +52,20 @@ public class Rocket : MonoBehaviour
     }
 
     void OnTriggerEnter2D(Collider2D colider) {
-        BlackHole hole = colider.gameObject.GetComponent<BlackHole>();
-        if (hole != null && hole.visible){
-            Destroy(gameObject);
-        }
+        // BlackHole hole = colider.gameObject.GetComponent<BlackHole>();
+        // if (hole != null && hole.visible){
+        //     Destroy(gameObject);
+        // }
 
         Coin coin = colider.gameObject.GetComponent<Coin>();
         if (coin != null) {
             Destroy(coin.gameObject);
         }
 
-        Obstacle obstacle = colider.gameObject.GetComponent<Obstacle>();
-        if (obstacle != null) {
-            Destroy(gameObject);
-        }
+        // Obstacle obstacle = colider.gameObject.GetComponent<Obstacle>();
+        // if (obstacle != null) {
+        //     Destroy(gameObject);
+        // }
 
     }
 }

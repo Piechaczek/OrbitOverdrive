@@ -26,7 +26,24 @@ public class ObstacleController : MonoBehaviour
     public void AddObstacle() {
         GameObject child = Instantiate(obstaclePrefab, transform);
         Obstacle obstacle = child.GetComponent<Obstacle>();
+
+        // TODO ugly and a lot O(n^2)
+        bool occupied = true;
+        int randX = 0;
+        int randY = 0;
+        while (occupied) {
+            randX = Mathf.FloorToInt(Random.Range(0, ROW_SIZE));
+            randY = Mathf.FloorToInt(Random.Range(0, COL_SIZE));
+            occupied = false;
+            foreach (Obstacle o in obstacles) {
+                if (randX == o.obstaclePosX && randY == o.obstaclePosY) {
+                    occupied = true;
+                    break;
+                }
+            }
+        }
+
         obstacles.Add(obstacle);
-        obstacle.SetObstaclePos(Mathf.FloorToInt(Random.Range(0, ROW_SIZE)), Mathf.FloorToInt(Random.Range(0, COL_SIZE)));
+        obstacle.SetObstaclePos(randX, randY);
     }
 }

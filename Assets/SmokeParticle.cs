@@ -1,0 +1,73 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class SmokeParticle : MonoBehaviour
+{
+
+    private SpriteRenderer renderer;
+    private int delay;
+    private float burnoutTarget;
+    private int burnoutTime;
+    private int charringTime;
+    private int vanishTime;
+
+    private int timer = 0;
+    private int state = -1;
+
+    private float charringDeltaR;
+    private float charringDeltaG;
+    private float vanishingDeltaA;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        renderer = gameObject.GetComponent<SpriteRenderer>();
+        burnoutTarget = Random.Range(10, 60);
+        delay = Mathf.FloorToInt(Random.Range(1, 5));
+        burnoutTime = Mathf.FloorToInt(Random.Range(1, 2));
+        // charringTime = Mathf.FloorToInt(Random.Range(1, 2));
+        vanishTime = Mathf.FloorToInt(Random.Range(1, 3));
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        timer += 1;
+        if (state == -1) {
+            // delay
+            if (timer > delay) {
+                state = 0;
+                timer = 0;
+            }
+        }
+        else if (state == 0) {
+            // burnout
+            renderer.color += new Color(0f, burnoutTarget / burnoutTime, 0f, 0f);
+            if (timer >= burnoutTime) {
+                state = 1;
+                timer = 0;
+                vanishingDeltaA = (0 - renderer.color.a) / vanishTime;
+                // charringDeltaR = (5 - renderer.color.r) / charringTime; 
+                // charringDeltaG = (5 - renderer.color.g) / charringTime; 
+            }
+        } 
+        // else if (state == 1) {
+        //     // charring
+        //     renderer.color += new Color(charringDeltaR, charringDeltaG, 0f, 0f);
+        //     if (timer >= charringTime) {
+        //         state = 2;
+        //         timer = 0;
+        //         vanishingDeltaA = (0 - renderer.color.a) / vanishTime;
+        //     }
+        // } 
+        else {
+            // vanishing
+            renderer.color += new Color(0f, 0f, 0f, vanishingDeltaA);
+
+            if (timer >= vanishTime) {
+                Destroy(gameObject);
+            }
+        }
+    }
+}
