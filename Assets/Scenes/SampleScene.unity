@@ -277,7 +277,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 1, y: 2}
   m_EdgeRadius: 0
 --- !u!1 &195504986
 GameObject:
@@ -1322,6 +1322,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   smokePrefab: {fileID: 8700176845348976434, guid: cac1b4e89d4ae284a860d30a41157194, type: 3}
   smokeAnchor: {fileID: 1045795908}
+  velocityMagScale: 0.01
   posRand: 0.1
   scaleRandMin: 0.1
   scaleRandMax: 0.3
