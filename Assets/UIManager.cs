@@ -1,14 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class UIManager : MonoBehaviour
 {
 
     public RectTransform rightPanel;
     public RectTransform leftPanel;
-    public RectTransform timeText;
-    public RectTransform scoreText;
+    public TextMeshProUGUI timeText;
+    public TextMeshProUGUI scoreText;
+    public RectTransform scoreMask;
 
     private Vector2 resolution;
 
@@ -30,8 +32,10 @@ public class UIManager : MonoBehaviour
         leftPanel.sizeDelta = new Vector2((Screen.width - Screen.height) / 2.0f, 0.0f);
         rightPanel.sizeDelta = new Vector2((Screen.width - Screen.height) / 2.0f, 0.0f);
 
-        timeText.SetInsetAndSizeFromParentEdge(RectTransform.Edge.Top, Screen.height * 0.4f, 0);
-        scoreText.SetInsetAndSizeFromParentEdge(RectTransform.Edge.Top, Screen.height * 0.4f, 0);
+        timeText.rectTransform.offsetMax = new Vector2(0f,  -Screen.height * 0.4f);
+        scoreText.rectTransform.offsetMax = new Vector2(0f,  -Screen.height * 0.4f);
+        scoreMask.offsetMax = new Vector2(0f,  -Screen.height * 0.4f - scoreText.preferredHeight);
+        scoreMask.offsetMin = new Vector2(0f, 0f);
     }
 
 }

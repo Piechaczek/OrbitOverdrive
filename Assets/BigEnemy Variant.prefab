@@ -71,5 +71,25 @@ PrefabInstance:
       propertyPath: maxHealth
       value: 400
       objectReference: {fileID: 0}
+    - target: {fileID: 3466671877582752181, guid: a31e786b9b20aa549a603e3a4ad7d571, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: ec5f9f52182056b49b16d1b87c2f746d, type: 3}
+    - target: {fileID: 6620806231133895086, guid: a31e786b9b20aa549a603e3a4ad7d571, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 7e1819fe9fee1e54594170001588cff6, type: 3}
+    - target: {fileID: 6620806231133895086, guid: a31e786b9b20aa549a603e3a4ad7d571, type: 3}
+      propertyPath: m_Color.b
+      value: 0.04601282
+      objectReference: {fileID: 0}
+    - target: {fileID: 6620806231133895086, guid: a31e786b9b20aa549a603e3a4ad7d571, type: 3}
+      propertyPath: m_Color.g
+      value: 0.4765258
+      objectReference: {fileID: 0}
+    - target: {fileID: 6620806231133895086, guid: a31e786b9b20aa549a603e3a4ad7d571, type: 3}
+      propertyPath: m_Color.r
+      value: 0.8867924
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a31e786b9b20aa549a603e3a4ad7d571, type: 3}

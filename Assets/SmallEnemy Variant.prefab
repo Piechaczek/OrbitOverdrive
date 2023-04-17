@@ -75,5 +75,17 @@ PrefabInstance:
       propertyPath: initialVelocity
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 6620806231133895086, guid: a31e786b9b20aa549a603e3a4ad7d571, type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6620806231133895086, guid: a31e786b9b20aa549a603e3a4ad7d571, type: 3}
+      propertyPath: m_Color.g
+      value: 0.74509805
+      objectReference: {fileID: 0}
+    - target: {fileID: 6620806231133895086, guid: a31e786b9b20aa549a603e3a4ad7d571, type: 3}
+      propertyPath: m_Color.r
+      value: 0.03232006
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a31e786b9b20aa549a603e3a4ad7d571, type: 3}

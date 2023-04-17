@@ -10,13 +10,24 @@ public class Enemy : MonoBehaviour
     private float collisionResistance;
     private float health;
     public bool wasHit = false; // if false, enemy won't tumble
-    private SpriteRenderer spriteRenderer;
+    public SpriteRenderer cabinRenderer;
+    public SpriteRenderer bodyRenderer; 
     private Rigidbody2D rigidbody;
+
+    public Sprite cabin1;
+    public Sprite cabin2;
+    public Sprite cabin3;
+    public Sprite cabin4;
+    public Sprite cabin5;
+    public Sprite body1;
+    public Sprite body2;
+    public Sprite body3;
+    public Sprite body4;
+    public Sprite body5;
 
     // Start is called before the first frame update
     void Start()
     {
-        spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
         rigidbody = gameObject.GetComponent<Rigidbody2D>();
 
         health = maxHealth;
@@ -46,11 +57,36 @@ public class Enemy : MonoBehaviour
             healthLoss = collisionSpeed - collisionResistance;
         }
 
-        health -= Mathf.Max(0, healthLoss);
-        spriteRenderer.color = new Color((health / maxHealth), spriteRenderer.color.g, spriteRenderer.color.b, spriteRenderer.color.a);
+        TakeDamage(healthLoss);
 
         if (collision.gameObject.tag == "Player" || collision.gameObject.tag == "Enemy") {
             wasHit = true;
+        }
+    }
+
+    void TakeDamage(float damage) {
+        health -= Mathf.Max(0, damage);
+        
+        if (health / maxHealth < 0.1){
+            bodyRenderer.sprite = body5;
+        } else if (health / maxHealth < 0.2){
+            cabinRenderer.sprite = cabin5;
+        } else if (health / maxHealth < 0.3){
+            bodyRenderer.sprite = body4;
+        } else if (health / maxHealth < 0.4){
+            cabinRenderer.sprite = cabin4;
+        } else if (health / maxHealth < 0.5){
+            bodyRenderer.sprite = body3;
+        } else if (health / maxHealth < 0.6){
+            cabinRenderer.sprite = cabin3;
+        } else if (health / maxHealth < 0.7){
+            bodyRenderer.sprite = body2;
+        } else if (health / maxHealth < 0.8){
+            cabinRenderer.sprite = cabin2;
+        } else if (health / maxHealth < 0.9){
+            bodyRenderer.sprite = body1;
+        } else {
+            cabinRenderer.sprite = cabin1;
         }
     }
 }

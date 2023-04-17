@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class BlackHole : MonoBehaviour
 {
-    private SpriteRenderer spriteRenderer;
     public bool visible = false;
     public bool active = false;
     public float moveDelayMillis = 200.0f;
@@ -18,7 +17,6 @@ public class BlackHole : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
         SetVisible(visible);
     }
 
@@ -41,7 +39,9 @@ public class BlackHole : MonoBehaviour
     }
 
     void SetVisible(bool visible) {
-        spriteRenderer.enabled = visible;
+        for (int i = 0; i < transform.childCount; i++){
+            transform.GetChild(i).gameObject.SetActive(visible);
+        }
         this.visible = visible;
         this.active = visible;
     }
