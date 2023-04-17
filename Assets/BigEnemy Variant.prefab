@@ -71,6 +71,14 @@ PrefabInstance:
       propertyPath: maxHealth
       value: 400
       objectReference: {fileID: 0}
+    - target: {fileID: 2636192451660129815, guid: a31e786b9b20aa549a603e3a4ad7d571, type: 3}
+      propertyPath: scoreMultiplier
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2636192451660129815, guid: a31e786b9b20aa549a603e3a4ad7d571, type: 3}
+      propertyPath: scoreMultiplaier
+      value: 1.5
+      objectReference: {fileID: 0}
     - target: {fileID: 3466671877582752181, guid: a31e786b9b20aa549a603e3a4ad7d571, type: 3}
       propertyPath: m_Sprite
       value: 

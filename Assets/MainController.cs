@@ -6,13 +6,20 @@ using UnityEngine;
 public class MainController : MonoBehaviour
 {
 
+    public static MainController INSTANCE;
+
     public int gameDuration = 150;
 
     public ObstacleController obstacleController;
     public TextMeshProUGUI timerText;
+    public ScoreWidget scoreWidget;
 
     private float startTime;
     private float threshold = 10;
+
+    void Awake() {
+        MainController.INSTANCE = this;
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -34,5 +41,9 @@ public class MainController : MonoBehaviour
         int minutes = Mathf.FloorToInt(remaining / 60.0f);
 
         timerText.text = minutes.ToString() + ':' + (seconds < 10 ? '0' : "") + seconds.ToString();
+    }
+
+    public void AddScore(string text, int score) {
+        scoreWidget.AddScore(text, score);
     }
 }

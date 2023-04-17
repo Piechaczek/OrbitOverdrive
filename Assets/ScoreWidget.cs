@@ -14,27 +14,11 @@ public class ScoreWidget : MonoBehaviour
     public GameObject subScoreTextPrefab;
 
     public float arrivalTime = 0.3f;
-    public float stayTime = 2.0f;
+    public float stayTime = 1.2f;
     public float departureTime = 0.1f;
     private List<ScoreSubText> subScores = new List<ScoreSubText>();
 
     private float timeUntilStay = -1f;
-
-    void Start() {
-        StartCoroutine(Tmp());
-    }
-
-    private IEnumerator Tmp() {
-        yield return new WaitForSeconds(3f);
-        AddScore("You got points!", 100);
-        yield return new WaitForSeconds(3f);
-        AddScore("You got points", 100);
-        yield return new WaitForSeconds(0.5f);
-        AddScore("Dummy points", 50);
-        yield return new WaitForSeconds(1f);
-        AddScore("More points", 10);
-        AddScore("Even more points", 30);
-    }
 
     void Update() {
 

@@ -7,6 +7,7 @@ public class Enemy : MonoBehaviour
 
     public float maxHealth = 200.0f;
     public float initialVelocity = 10f;
+    public float scoreMultiplier = 1f;
     private float collisionResistance;
     private float health;
     public bool wasHit = false; // if false, enemy won't tumble
@@ -24,6 +25,8 @@ public class Enemy : MonoBehaviour
     public Sprite body3;
     public Sprite body4;
     public Sprite body5;
+
+    public ScoreSheet scoreSheet;
 
     // Start is called before the first frame update
     void Start()
@@ -57,10 +60,22 @@ public class Enemy : MonoBehaviour
             healthLoss = collisionSpeed - collisionResistance;
         }
 
+        AddPoints(healthLoss / maxHealth, collision.gameObject.tag);
         TakeDamage(healthLoss);
 
         if (collision.gameObject.tag == "Player" || collision.gameObject.tag == "Enemy") {
             wasHit = true;
+        }
+    }
+
+    void AddPoints(float damageDealtPercent, string collidedWith) {
+        ScoreSheet.Score score = scoreSheet.GetScore(health / maxHealth, damageDealtPercent, collidedWith);
+        if (score != null) {
+            int multipliedScore = Mathf.RoundToInt(score.score * scoreMultiplier);
+            int lastDigitDelta = Mathf.RoundToInt((multipliedScore % 10) * 2 / 10.0f) * 5 - (multipliedScore % 10);
+            multipliedScore += lastDigitDelta;
+
+            MainController.INSTANCE.AddScore(score.scoreText, multipliedScore);
         }
     }
 
@@ -89,4 +104,5 @@ public class Enemy : MonoBehaviour
             cabinRenderer.sprite = cabin1;
         }
     }
+
 }

@@ -75,6 +75,14 @@ PrefabInstance:
       propertyPath: initialVelocity
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 2636192451660129815, guid: a31e786b9b20aa549a603e3a4ad7d571, type: 3}
+      propertyPath: scoreMultiplier
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2636192451660129815, guid: a31e786b9b20aa549a603e3a4ad7d571, type: 3}
+      propertyPath: scoreMultiplaier
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 6620806231133895086, guid: a31e786b9b20aa549a603e3a4ad7d571, type: 3}
       propertyPath: m_Color.b
       value: 0
