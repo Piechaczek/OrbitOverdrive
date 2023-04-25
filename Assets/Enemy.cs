@@ -14,6 +14,7 @@ public class Enemy : MonoBehaviour
     public SpriteRenderer cabinRenderer;
     public SpriteRenderer bodyRenderer; 
     private Rigidbody2D rigidbody;
+    private AudioSource hitAudioSource;
 
     public Sprite cabin1;
     public Sprite cabin2;
@@ -37,6 +38,7 @@ public class Enemy : MonoBehaviour
     void Start()
     {
         rigidbody = gameObject.GetComponent<Rigidbody2D>();
+        hitAudioSource = gameObject.GetComponent<AudioSource>();
 
         health = maxHealth;
         collisionResistance = initialVelocity;
@@ -76,6 +78,13 @@ public class Enemy : MonoBehaviour
         float healthLoss = collisionSpeed;
         if (collision.gameObject.tag != "Player") {
             healthLoss = collisionSpeed - collisionResistance;
+        }
+
+        if (healthLoss > 5) {
+            if (hitAudioSource.volume > 0) {
+                hitAudioSource.volume = Mathf.Clamp(healthLoss / maxHealth * 2f, 0.2f, 1f);
+            }
+            hitAudioSource.Play();
         }
 
         AddPoints(healthLoss / maxHealth, collision.gameObject.tag);

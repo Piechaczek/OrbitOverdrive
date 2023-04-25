@@ -9,6 +9,7 @@ public class Rocket : MonoBehaviour
     public float forceCap = 1.0f;
     public float speed = 1.0f;
     public BlackHole blackHole;
+    public ScreenShake screenShake;
     private Vector3 velocity = new Vector3(0.0f, 0.0f, 0.0f);
     private Vector3 acceleration = new Vector3(0.0f, 0.0f, 0.0f);
     private Rigidbody2D rb;
@@ -36,7 +37,7 @@ public class Rocket : MonoBehaviour
         transform.localEulerAngles = new Vector3(0.0f, 0.0f, angle * 180.0f / Mathf.PI - 90.0f);
     }
 
-    void OnTriggerEnter2D(Collider2D colider) {
-        // TODO sound?
+    void OnCollisionEnter2D(Collision2D collision) {
+        screenShake.endShake = Time.time + 0.1f;
     }
 }
