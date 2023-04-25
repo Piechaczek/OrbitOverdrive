@@ -27,12 +27,14 @@ public class BlackHole : MonoBehaviour
             Animate();
         }   
 
-        if (Input.GetMouseButtonDown(0)) {
-            Vector2 newPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            float cameraSize = Camera.main.orthographicSize;
-            if (newPos.x > -cameraSize && newPos.x < cameraSize && newPos.y > -cameraSize && newPos.y < cameraSize){
-                if (!animating) {
-                    StartAnimation(newPos);
+        if (MainController.PLAYING) {
+            if (Input.GetMouseButtonDown(0)) {
+                Vector2 newPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                float cameraSize = Camera.main.orthographicSize;
+                if (newPos.x > -cameraSize && newPos.x < cameraSize && newPos.y > -cameraSize && newPos.y < cameraSize){
+                    if (!animating) {
+                        StartAnimation(newPos);
+                    }
                 }
             }
         }

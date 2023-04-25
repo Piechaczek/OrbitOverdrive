@@ -28,6 +28,11 @@ public class Enemy : MonoBehaviour
 
     public ScoreSheet scoreSheet;
 
+    public GameObject smokePrefab;
+    private float smokeTime = 0;
+    private float minSmokeTime = 0.15f;
+    private float maxSmokeTime = 0.15f; 
+
     // Start is called before the first frame update
     void Start()
     {
@@ -45,11 +50,24 @@ public class Enemy : MonoBehaviour
     void Update()
     {
         if (health <= 0.0f) {
+            for (int i = 0; i < 15; i++) {
+                SummonSmokeParticle(1f);
+            }
+            for (int i = 0; i < 12; i++) {
+                SummonFireParticle();
+            }
             Destroy(gameObject);
         }
 
         if (!wasHit){
             transform.localRotation = Quaternion.identity;
+        }
+
+        if (smokeTime > 0){
+            if (Time.time >= smokeTime) {
+                smokeTime += Random.Range(minSmokeTime, maxSmokeTime);
+                SummonSmokeParticle(0.3f);
+            }
         }
     }
 
@@ -89,6 +107,7 @@ public class Enemy : MonoBehaviour
         } else if (health / maxHealth < 0.3){
             bodyRenderer.sprite = body4;
         } else if (health / maxHealth < 0.4){
+            smokeTime = Time.time - 5 * minSmokeTime;
             cabinRenderer.sprite = cabin4;
         } else if (health / maxHealth < 0.5){
             bodyRenderer.sprite = body3;
@@ -103,6 +122,32 @@ public class Enemy : MonoBehaviour
         } else {
             cabinRenderer.sprite = cabin1;
         }
+    }
+
+    void SummonSmokeParticle(float time) {
+        GameObject smokeParticleObject = Instantiate(smokePrefab, transform.position, Quaternion.identity);
+        smokeParticleObject.transform.localScale /= transform.localScale.x; // adjust for enemy size
+        SmokeParticle smokeParticle = smokeParticleObject.GetComponent<SmokeParticle>();
+        smokeParticle.SetVelocity(new Vector2(Random.Range(-0.1f, 0.1f) * transform.localScale.x, Random.Range(-0.1f, 0.1f) * transform.localScale.x), Random.Range(-10f, 10f));
+        var transitions = new List<(Color, float)>{
+            (new Color(0.1f, 0.1f, 0.1f, 1f), time),
+            (new Color(0.1f, 0.1f, 0.1f, 0f), 0.1f)
+        };
+        smokeParticle.SetAnimation(new Color(0.2f, 0.2f, 0.2f), transitions);
+    }
+
+    void SummonFireParticle() {
+        GameObject smokeParticleObject = Instantiate(smokePrefab, transform.position, Quaternion.identity);
+        smokeParticleObject.transform.localScale /= transform.localScale.x; // adjust for enemy size
+        SmokeParticle smokeParticle = smokeParticleObject.GetComponent<SmokeParticle>();
+
+        Color startColor = new Color(Random.Range(0.7f, 0.9f), Random.Range(0f, 0.3f), 0f);
+        smokeParticle.SetVelocity(new Vector2(Random.Range(-0.08f, 0.08f) * transform.localScale.x, Random.Range(-0.08f, 0.08f) * transform.localScale.x), Random.Range(-10f, 10f));
+        var transitions = new List<(Color, float)>{
+            (new Color(startColor.r * 0.3f, startColor.g * 0.5f, 0f, 1f), 0.6f),
+            (new Color(0.1f, 0.1f, 0.1f, 0f), 0.1f)
+        };
+        smokeParticle.SetAnimation(startColor, transitions);
     }
 
 }

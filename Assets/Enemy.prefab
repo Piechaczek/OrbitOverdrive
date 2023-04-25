@@ -88,6 +88,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 200
   initialVelocity: 1
+  scoreMultiplier: 1
   wasHit: 0
   cabinRenderer: {fileID: 3466671877582752181}
   bodyRenderer: {fileID: 6620806231133895086}
@@ -102,6 +103,7 @@ MonoBehaviour:
   body4: {fileID: 21300000, guid: 50cc0fc03c6f36a44a121d20454bbed2, type: 3}
   body5: {fileID: 21300000, guid: 4a2f0e6e0bee409408acb0dde9978402, type: 3}
   scoreSheet: {fileID: 4431959617072022344}
+  smokePrefab: {fileID: 8620509390761937340, guid: cac1b4e89d4ae284a860d30a41157194, type: 3}
 --- !u!114 &4431959617072022344
 MonoBehaviour:
   m_ObjectHideFlags: 0
