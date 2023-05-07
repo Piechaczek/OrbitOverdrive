@@ -16,7 +16,7 @@ public class MainController : MonoBehaviour
     public TextMeshProUGUI timerText;
     public ScoreWidget scoreWidget;
 
-    private float startTime;
+    public float startTime;
     private float threshold = 10;
 
     void Awake() {
