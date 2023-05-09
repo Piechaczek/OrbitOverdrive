@@ -3169,3 +3169,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bgMusic: {fileID: 2123603636}
   enemyController: {fileID: 1328588152}
+  musicOff: 1
+  soundsOff: 1

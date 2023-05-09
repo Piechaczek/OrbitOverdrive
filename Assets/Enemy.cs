@@ -39,6 +39,11 @@ public class Enemy : MonoBehaviour
     {
         rigidbody = gameObject.GetComponent<Rigidbody2D>();
         hitAudioSource = gameObject.GetComponent<AudioSource>();
+        if (AudioController.INSTANCE.soundsOff) {
+            hitAudioSource.volume = 0f;
+        } else {
+            hitAudioSource.volume = 1f;
+        }
 
         health = maxHealth;
         collisionResistance = initialVelocity;
