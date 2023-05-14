@@ -56,48 +56,54 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (health <= 0.0f) {
-            for (int i = 0; i < 15; i++) {
-                SummonSmokeParticle(1f);
+        if (MainController.PLAYING){
+            if (health <= 0.0f) {
+                for (int i = 0; i < 15; i++) {
+                    SummonSmokeParticle(1f);
+                }
+                for (int i = 0; i < 12; i++) {
+                    SummonFireParticle();
+                }
+                Destroy(gameObject);
             }
-            for (int i = 0; i < 12; i++) {
-                SummonFireParticle();
-            }
-            Destroy(gameObject);
-        }
 
-        if (!wasHit){
-            transform.localRotation = Quaternion.identity;
-        }
-
-        if (smokeTime > 0){
-            if (Time.time >= smokeTime) {
-                smokeTime += Random.Range(minSmokeTime, maxSmokeTime);
-                SummonSmokeParticle(0.3f);
+            if (!wasHit){
+                transform.localRotation = Quaternion.identity;
             }
+
+            if (smokeTime > 0){
+                if (Time.time >= smokeTime) {
+                    smokeTime += Random.Range(minSmokeTime, maxSmokeTime);
+                    SummonSmokeParticle(0.3f);
+                }
+            }
+        } else {
+            GetComponent<Rigidbody2D>().simulated = false;
         }
     }
 
     void OnCollisionEnter2D(Collision2D collision) {
-        float collisionSpeed = collision.relativeVelocity.magnitude;
-        float healthLoss = collisionSpeed;
-        if (collision.gameObject.tag != "Player") {
-            healthLoss = collisionSpeed - collisionResistance;
-        }
-
-        if (healthLoss > 5) {
-            if (hitAudioSource.volume > 0) {
-                hitAudioSource.volume = Mathf.Clamp(healthLoss / maxHealth * 2f, 0.2f, 1f);
+        if (MainController.PLAYING){
+            float collisionSpeed = collision.relativeVelocity.magnitude;
+            float healthLoss = collisionSpeed;
+            if (collision.gameObject.tag != "Player") {
+                healthLoss = collisionSpeed - collisionResistance;
             }
-            hitAudioSource.Play();
-        }
 
-        AddPoints(healthLoss / maxHealth, collision.gameObject.tag);
-        TakeDamage(healthLoss);
+            if (healthLoss > 5) {
+                if (hitAudioSource.volume > 0) {
+                    hitAudioSource.volume = Mathf.Clamp(healthLoss / maxHealth * 2f, 0.2f, 1f);
+                }
+                hitAudioSource.Play();
+            }
 
-        if (collision.gameObject.tag == "Player" || collision.gameObject.tag == "Enemy") {
-            wasHit = true;
-        }
+            AddPoints(healthLoss / maxHealth, collision.gameObject.tag);
+            TakeDamage(healthLoss);
+
+            if (collision.gameObject.tag == "Player" || collision.gameObject.tag == "Enemy") {
+                wasHit = true;
+            }
+        } 
     }
 
     void AddPoints(float damageDealtPercent, string collidedWith) {
@@ -107,7 +113,9 @@ public class Enemy : MonoBehaviour
             int lastDigitDelta = Mathf.RoundToInt((multipliedScore % 10) * 2 / 10.0f) * 5 - (multipliedScore % 10);
             multipliedScore += lastDigitDelta;
 
-            MainController.INSTANCE.AddScore(score.scoreText, multipliedScore);
+            if (MainController.PLAYING) {
+                MainController.INSTANCE.AddScore(score.scoreText, multipliedScore);
+            }
         }
     }
 

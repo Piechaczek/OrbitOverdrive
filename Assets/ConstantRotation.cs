@@ -17,7 +17,9 @@ public class ConstantRotation : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float time = Time.time - startTime;
-        transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, transform.localEulerAngles.y, (time * anglePerSecond) % 360);
+        if (!MainController.PAUSE_ROTATION) {
+            float time = Time.time - startTime;
+            transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, transform.localEulerAngles.y, (time * anglePerSecond) % 360);
+        }
     }
 }

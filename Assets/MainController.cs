@@ -2,19 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MainController : MonoBehaviour
 {
 
     public static MainController INSTANCE;
     public static bool PLAYING = true;
+    public static bool PAUSE_ROTATION = false;
+    public static bool IN_MEDIA_RES = false;
 
     public int gameDuration = 150;
 
     public ObstacleController obstacleController;
     public AudioController audioController;
+    public UIManager uIManager;
     public TextMeshProUGUI timerText;
     public ScoreWidget scoreWidget;
+    public BlackHole blackHole;
 
     public float startTime;
     private float threshold = 10;
@@ -45,10 +50,10 @@ public class MainController : MonoBehaviour
 
             timerText.text = minutes.ToString() + ':' + (seconds < 10 ? '0' : "") + seconds.ToString();
 
-                if (remaining <= 0){
-                    EndGame();
-                }
+            if (remaining <= 0){
+                EndGame();
             }
+        }
     }
 
     public void AddScore(string text, int score) {
@@ -57,11 +62,36 @@ public class MainController : MonoBehaviour
 
     void StartGame() {
         PLAYING = true;
+        PAUSE_ROTATION = false;
         startTime = Time.time;
         audioController.PlayBackground();
     }
 
     void EndGame() {
         PLAYING = false;
+        PAUSE_ROTATION = true;
+
+        scoreWidget.OnEndGame();
+        uIManager.OnEndGame(1f);
+    }
+
+    public void Reset() {
+        blackHole.SetVisible(true);
+        blackHole.Inflate();
+        uIManager.OnReset();
+
+        StartCoroutine(FinishReset());
+    }
+
+    public IEnumerator FinishReset() {
+        yield return new WaitForSeconds(3f);
+
+        // reset statics
+        PLAYING = true;
+        PAUSE_ROTATION = false;
+        // set static
+        IN_MEDIA_RES = true;
+
+        SceneManager.LoadScene("scenes/MainScene");
     }
 }

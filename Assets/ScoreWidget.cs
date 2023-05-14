@@ -10,6 +10,7 @@ public class ScoreWidget : MonoBehaviour
     public int displayedScore = 0;
 
     public TextMeshProUGUI scoreText;
+    public TextMeshProUGUI gameOverScoreText;
     public Transform scoreMask;
     public GameObject subScoreTextPrefab;
 
@@ -42,6 +43,7 @@ public class ScoreWidget : MonoBehaviour
         }
 
         scoreText.text = displayedScore.ToString("000000");
+        gameOverScoreText.text = displayedScore.ToString("000000");
     }
 
     public void AddScore(string scoreText, int scoreValue) {
@@ -52,5 +54,16 @@ public class ScoreWidget : MonoBehaviour
         subText.NavigateToPosition(subScores.Count - 1, arrivalTime);
         timeUntilStay = Time.time + stayTime;
     } 
+
+    public void OnEndGame() {
+        timeUntilStay = Time.time;
+    }
+
+    public void SetAlpha(float alpha) {
+        scoreText.alpha = alpha;
+        foreach (ScoreSubText score in subScores) {
+            score.GetComponent<TextMeshProUGUI>().alpha = alpha;
+        } 
+    }
 
 }

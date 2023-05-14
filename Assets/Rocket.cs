@@ -22,22 +22,30 @@ public class Rocket : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (blackHole.visible){
-            Vector2 diff = new Vector2(blackHole.transform.position.x - transform.position.x, blackHole.transform.position.y - transform.position.y);
-            float r  = diff.magnitude;
-            rb.AddForce(new Vector2(Mathf.Clamp(gravityConstant * diff.x / Mathf.Pow(r, 3.0f), -forceCap, forceCap), Mathf.Clamp(gravityConstant * diff.y / Mathf.Pow(r, 3.0f), -forceCap, forceCap)));
+        if (MainController.PLAYING){
+            if (blackHole.visible){
+                Vector2 diff = new Vector2(blackHole.transform.position.x - transform.position.x, blackHole.transform.position.y - transform.position.y);
+                float r  = diff.magnitude;
+                rb.AddForce(new Vector2(Mathf.Clamp(gravityConstant * diff.x / Mathf.Pow(r, 3.0f), -forceCap, forceCap), Mathf.Clamp(gravityConstant * diff.y / Mathf.Pow(r, 3.0f), -forceCap, forceCap)));
+            }
+        
+            float angle = Mathf.Atan2(rb.velocity.y, rb.velocity.x);
+            rb.AddForce(new Vector2(speed*Mathf.Cos(angle), speed*Mathf.Sin(angle)));
+        } else {
+            GetComponent<Rigidbody2D>().simulated = false;
         }
-    
-        float angle = Mathf.Atan2(rb.velocity.y, rb.velocity.x);
-        rb.AddForce(new Vector2(speed*Mathf.Cos(angle), speed*Mathf.Sin(angle)));
     }
 
     void Update() {
-        float angle = Mathf.Atan2(rb.velocity.y, rb.velocity.x);
-        transform.localEulerAngles = new Vector3(0.0f, 0.0f, angle * 180.0f / Mathf.PI - 90.0f);
+        if (MainController.PLAYING) {
+            float angle = Mathf.Atan2(rb.velocity.y, rb.velocity.x);
+            transform.localEulerAngles = new Vector3(0.0f, 0.0f, angle * 180.0f / Mathf.PI - 90.0f);
+        }
     }
 
     void OnCollisionEnter2D(Collision2D collision) {
-        screenShake.endShake = Time.time + 0.1f;
+        if (MainController.PLAYING){
+            screenShake.endShake = Time.time + 0.1f;
+        }
     }
 }
