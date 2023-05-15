@@ -23,6 +23,7 @@ public class Rocket : MonoBehaviour
     void FixedUpdate()
     {
         if (MainController.PLAYING){
+            GetComponent<Rigidbody2D>().simulated = true;
             if (blackHole.visible){
                 Vector2 diff = new Vector2(blackHole.transform.position.x - transform.position.x, blackHole.transform.position.y - transform.position.y);
                 float r  = diff.magnitude;

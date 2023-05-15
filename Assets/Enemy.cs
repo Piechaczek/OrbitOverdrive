@@ -57,6 +57,7 @@ public class Enemy : MonoBehaviour
     void Update()
     {
         if (MainController.PLAYING){
+            GetComponent<Rigidbody2D>().simulated = true;
             if (health <= 0.0f) {
                 for (int i = 0; i < 15; i++) {
                     SummonSmokeParticle(1f);

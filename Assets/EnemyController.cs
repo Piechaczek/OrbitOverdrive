@@ -67,7 +67,7 @@ public class EnemyController : MonoBehaviour
         waves[6].Add((smallEnemySpawerPrefab, false));
 
         // wave 8
-        waveTimes[7] = 134;
+        waveTimes[7] = 133.5f;
         waves[7] = new List<(EnemySpawner, bool)>();
         waves[7].Add((enemySpawerPrefab, false));
         waves[7].Add((enemySpawerPrefab, false));
@@ -78,7 +78,7 @@ public class EnemyController : MonoBehaviour
 
     void Update()
     {
-        if (waveNumber < waveCount){
+        if (waveNumber < waveCount && MainController.PLAYING){
             float elapsed = Time.time - MainController.INSTANCE.startTime;
             if (elapsed > waveTimes[waveNumber]) {
                 // spawn wave

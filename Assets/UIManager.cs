@@ -22,10 +22,16 @@ public class UIManager : MonoBehaviour
     public RectTransform introCutoutPanel;
     public RectTransform introPanel;
 
+    public RectTransform startPanel;
+
 
     public Image fullPanel;
 
     private Vector2 resolution;
+
+
+    private float startAnimationStartTime = -1f;
+    private float startAnimationDuration = 1f;
 
     private float endAnimationStartTime = -1f;
     private float endAnimationDuration = 1f;
@@ -83,6 +89,10 @@ public class UIManager : MonoBehaviour
             float gameOverPanelDelta = progress * (Screen.height + (gameOverPanelHeight / 2f));
             gameOverPanel.offsetMax = new Vector2(gameOverPanel.offsetMax.x, (gameOverPanelHeight / 2f) - gameOverPanelDelta);
             gameOverPanel.offsetMin = new Vector2(gameOverPanel.offsetMin.x, -(gameOverPanelHeight / 2f) - gameOverPanelDelta);
+
+            if (elapsed == resetAnimationDuration) {
+                resetAnimationStartTime = -1;
+            }
         }
 
         if (MainController.IN_MEDIA_RES) {
@@ -104,6 +114,26 @@ public class UIManager : MonoBehaviour
             float targetSize = Mathf.Max(Screen.width, Screen.height);
             introCutoutPanel.offsetMax = new Vector2(targetSize * progress, targetSize * progress);
             introCutoutPanel.offsetMin = new Vector2(targetSize * -progress, targetSize * -progress);
+
+            if (elapsed == cutoutAnimationDuration) {
+                cutoutAnimationStartTime = -1;
+            }
+        }
+
+        if (startAnimationStartTime > -1) {
+            float elapsed = Mathf.Min(Time.time - startAnimationStartTime, startAnimationDuration);
+            float progress = elapsed / startAnimationDuration;
+
+            float delta = Screen.height * progress;
+            startPanel.offsetMax = new Vector2(Screen.width / 2f, Screen.height / 2f + delta);
+            startPanel.offsetMin = new Vector2(-Screen.width / 2f, -Screen.height / 2f + delta);
+
+            scoreWidget.SetAlpha(progress);
+            timeText.alpha = progress;
+
+            if (elapsed == startAnimationDuration) {
+                startAnimationStartTime = -1;
+            }
         }
     }
 
@@ -122,11 +152,14 @@ public class UIManager : MonoBehaviour
         scoreMask.offsetMax = new Vector2(0f,  -Screen.height * 0.4f - scoreText.preferredHeight);
         scoreMask.offsetMin = new Vector2(0f, 0f);
 
-        if (MainController.PLAYING) {
-            float height = gameOverPanel.offsetMax.y - gameOverPanel.offsetMin.y;
-            gameOverPanel.offsetMax = new Vector2(gameOverPanel.offsetMax.x, -Screen.height);
-            gameOverPanel.offsetMin = new Vector2(gameOverPanel.offsetMin.x, -Screen.height - height);
-        }
+        float height = gameOverPanel.offsetMax.y - gameOverPanel.offsetMin.y;
+        gameOverPanel.offsetMax = new Vector2(gameOverPanel.offsetMax.x, -Screen.height);
+        gameOverPanel.offsetMin = new Vector2(gameOverPanel.offsetMin.x, -Screen.height - height);
+    }
+
+    public void OnStartGame() {
+        startAnimationStartTime = Time.time;
+        startAnimationDuration = 1f;
     }
 
     public void OnEndGame(float duaration) {
@@ -136,7 +169,7 @@ public class UIManager : MonoBehaviour
 
     public void OnReset() {
         resetAnimationStartTime = Time.time;
-        resetAnimationDuration = 1f;
+        resetAnimationDuration = 0.5f;
     }
 
 }

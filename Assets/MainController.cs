@@ -8,7 +8,7 @@ public class MainController : MonoBehaviour
 {
 
     public static MainController INSTANCE;
-    public static bool PLAYING = true;
+    public static bool PLAYING = false;
     public static bool PAUSE_ROTATION = false;
     public static bool IN_MEDIA_RES = false;
 
@@ -34,7 +34,6 @@ public class MainController : MonoBehaviour
         if (IN_MEDIA_RES) {
             uIManager.AnimateCutout();
         }
-        StartGame();
     }
 
     // Update is called once per frame
@@ -53,9 +52,13 @@ public class MainController : MonoBehaviour
 
             timerText.text = minutes.ToString() + ':' + (seconds < 10 ? '0' : "") + seconds.ToString();
 
-            if (remaining <= 145){
+            if (remaining <= 0){
                 EndGame();
             }
+        }
+
+        if (Input.GetKey(KeyCode.Escape) || Input.GetKeyDown(KeyCode.Escape)){
+            Application.Quit();
         }
     }
 
@@ -63,11 +66,14 @@ public class MainController : MonoBehaviour
         scoreWidget.AddScore(text, score);
     }
 
-    void StartGame() {
-        PLAYING = true;
-        PAUSE_ROTATION = false;
-        startTime = Time.time;
-        audioController.PlayBackground();
+    public void StartGame() {
+        if (!PLAYING) {
+            PLAYING = true;
+            PAUSE_ROTATION = false;
+            startTime = Time.time;
+            audioController.PlayBackground();
+            uIManager.OnStartGame();
+        }
     }
 
     void EndGame() {
@@ -90,7 +96,7 @@ public class MainController : MonoBehaviour
         yield return new WaitForSeconds(1f);
 
         // reset statics
-        PLAYING = true;
+        PLAYING = false;
         PAUSE_ROTATION = false;
         // set static
         IN_MEDIA_RES = true;
