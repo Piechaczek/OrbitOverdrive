@@ -19,6 +19,9 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI gameOverScoreText;
     public RectTransform gameOverButton;
 
+    public RectTransform introCutoutPanel;
+    public RectTransform introPanel;
+
 
     public Image fullPanel;
 
@@ -29,6 +32,9 @@ public class UIManager : MonoBehaviour
 
     private float resetAnimationStartTime = -1f;
     private float resetAnimationDuration = 1f;
+
+    private float cutoutAnimationStartTime = -1f;
+    private float cutoutAnimationDuration = 1f;
 
     private void Awake()
     {
@@ -78,6 +84,32 @@ public class UIManager : MonoBehaviour
             gameOverPanel.offsetMax = new Vector2(gameOverPanel.offsetMax.x, (gameOverPanelHeight / 2f) - gameOverPanelDelta);
             gameOverPanel.offsetMin = new Vector2(gameOverPanel.offsetMin.x, -(gameOverPanelHeight / 2f) - gameOverPanelDelta);
         }
+
+        if (MainController.IN_MEDIA_RES) {
+            introPanel.gameObject.SetActive(true);
+            introCutoutPanel.gameObject.SetActive(true);
+
+            introPanel.offsetMax = new Vector2(2*Screen.width, 2*Screen.height);
+            introPanel.offsetMin = new Vector2(-2*Screen.width, -2*Screen.height);
+        } else {
+            introPanel.gameObject.SetActive(false);
+            introCutoutPanel.gameObject.SetActive(false);
+        }
+
+        if (cutoutAnimationStartTime > -1) {
+            float elapsed = Mathf.Min(Time.time - cutoutAnimationStartTime, cutoutAnimationDuration);
+            float progress = elapsed / cutoutAnimationDuration;
+
+            float size = introCutoutPanel.offsetMax.x - introCutoutPanel.offsetMin.x;
+            float targetSize = Mathf.Max(Screen.width, Screen.height);
+            introCutoutPanel.offsetMax = new Vector2(targetSize * progress, targetSize * progress);
+            introCutoutPanel.offsetMin = new Vector2(targetSize * -progress, targetSize * -progress);
+        }
+    }
+
+    public void AnimateCutout() {
+        cutoutAnimationStartTime = Time.time;
+        cutoutAnimationDuration = 1f;
     }
 
     private void OnScreenUpdate() {
@@ -104,7 +136,7 @@ public class UIManager : MonoBehaviour
 
     public void OnReset() {
         resetAnimationStartTime = Time.time;
-        resetAnimationDuration = 0.5f;
+        resetAnimationDuration = 1f;
     }
 
 }

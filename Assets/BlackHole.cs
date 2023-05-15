@@ -44,7 +44,7 @@ public class BlackHole : MonoBehaviour
         }
 
         if (inflateStart > 0) {
-            float progress = (Time.time - inflateStart) * 100;
+            float progress = (Time.time - inflateStart) * 300;
             transform.localScale = new Vector3(1f + progress, 1f + progress, 1);
         }
     }

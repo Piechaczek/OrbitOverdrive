@@ -31,6 +31,9 @@ public class MainController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (IN_MEDIA_RES) {
+            uIManager.AnimateCutout();
+        }
         StartGame();
     }
 
@@ -50,7 +53,7 @@ public class MainController : MonoBehaviour
 
             timerText.text = minutes.ToString() + ':' + (seconds < 10 ? '0' : "") + seconds.ToString();
 
-            if (remaining <= 0){
+            if (remaining <= 145){
                 EndGame();
             }
         }
@@ -84,7 +87,7 @@ public class MainController : MonoBehaviour
     }
 
     public IEnumerator FinishReset() {
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(1f);
 
         // reset statics
         PLAYING = true;
