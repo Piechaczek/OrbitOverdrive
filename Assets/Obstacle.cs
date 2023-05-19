@@ -25,6 +25,6 @@ public class Obstacle : MonoBehaviour
         float yMargin = Camera.main.orthographicSize * 2 / ObstacleController.COL_SIZE;
         float posX = x * xMargin + (xMargin / 2.0f) - Camera.main.orthographicSize;
         float posY = y * yMargin + (yMargin / 2.0f) - Camera.main.orthographicSize;
-        transform.position = new Vector3(posX, posY);
+        transform.position = new Vector3(posX, posY, -0.6f);
     }
 }

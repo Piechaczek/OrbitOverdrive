@@ -26,7 +26,7 @@ public class AudioController : MonoBehaviour
         if (musicOff) {
             bgMusic.volume = 0f;
         } else {
-            bgMusic.volume = 0.2f;
+            bgMusic.volume = 0.3f;
         }
     }
 

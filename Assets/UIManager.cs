@@ -23,6 +23,8 @@ public class UIManager : MonoBehaviour
     public RectTransform introPanel;
 
     public RectTransform startPanel;
+    public TextMeshProUGUI quitHintText;
+    public TextMeshProUGUI tutorialHintText;
 
 
     public Image fullPanel;
@@ -159,7 +161,9 @@ public class UIManager : MonoBehaviour
 
     public void OnStartGame() {
         startAnimationStartTime = Time.time;
-        startAnimationDuration = 1f;
+        startAnimationDuration = 0.5f;
+        quitHintText.alpha = 0;
+        tutorialHintText.alpha = 0;
     }
 
     public void OnEndGame(float duaration) {

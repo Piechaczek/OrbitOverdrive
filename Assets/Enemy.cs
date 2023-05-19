@@ -14,7 +14,7 @@ public class Enemy : MonoBehaviour
     public SpriteRenderer cabinRenderer;
     public SpriteRenderer bodyRenderer; 
     private Rigidbody2D rigidbody;
-    private AudioSource hitAudioSource;
+    // private AudioSource hitAudioSource;
 
     public Sprite cabin1;
     public Sprite cabin2;
@@ -38,12 +38,12 @@ public class Enemy : MonoBehaviour
     void Start()
     {
         rigidbody = gameObject.GetComponent<Rigidbody2D>();
-        hitAudioSource = gameObject.GetComponent<AudioSource>();
-        if (AudioController.INSTANCE.soundsOff) {
-            hitAudioSource.volume = 0f;
-        } else {
-            hitAudioSource.volume = 1f;
-        }
+        // hitAudioSource = gameObject.GetComponent<AudioSource>();
+        // if (AudioController.INSTANCE.soundsOff) {
+        //     hitAudioSource.volume = 0f;
+        // } else {
+        //     hitAudioSource.volume = 1f;
+        // }
 
         health = maxHealth;
         collisionResistance = initialVelocity;
@@ -59,10 +59,10 @@ public class Enemy : MonoBehaviour
         if (MainController.PLAYING){
             GetComponent<Rigidbody2D>().simulated = true;
             if (health <= 0.0f) {
-                for (int i = 0; i < 15; i++) {
+                for (int i = 0; i < 8f * transform.localScale.x; i++) {
                     SummonSmokeParticle(1f);
                 }
-                for (int i = 0; i < 12; i++) {
+                for (int i = 0; i < 6 * transform.localScale.x; i++) {
                     SummonFireParticle();
                 }
                 Destroy(gameObject);
@@ -89,13 +89,9 @@ public class Enemy : MonoBehaviour
             float healthLoss = collisionSpeed;
             if (collision.gameObject.tag != "Player") {
                 healthLoss = collisionSpeed - collisionResistance;
-            }
-
-            if (healthLoss > 5) {
-                if (hitAudioSource.volume > 0) {
-                    hitAudioSource.volume = Mathf.Clamp(healthLoss / maxHealth * 2f, 0.2f, 1f);
+                if (healthLoss > 5) {
+                    SoundController.INSTANCE.PlayHitClip(Mathf.Clamp(healthLoss / maxHealth / 15f, 0.2f, 1f));
                 }
-                hitAudioSource.Play();
             }
 
             AddPoints(healthLoss / maxHealth, collision.gameObject.tag);
@@ -149,7 +145,8 @@ public class Enemy : MonoBehaviour
 
     void SummonSmokeParticle(float time) {
         GameObject smokeParticleObject = Instantiate(smokePrefab, transform.position, Quaternion.identity);
-        smokeParticleObject.transform.localScale /= transform.localScale.x; // adjust for enemy size
+        // smokeParticleObject.transform.localScale *= transform.localScale.x; // adjust for enemy size
+        smokeParticleObject.transform.localScale *= 2; // adjust for enemy size
         SmokeParticle smokeParticle = smokeParticleObject.GetComponent<SmokeParticle>();
         smokeParticle.SetVelocity(new Vector2(Random.Range(-0.1f, 0.1f) * transform.localScale.x, Random.Range(-0.1f, 0.1f) * transform.localScale.x), Random.Range(-10f, 10f));
         var transitions = new List<(Color, float)>{
@@ -161,7 +158,8 @@ public class Enemy : MonoBehaviour
 
     void SummonFireParticle() {
         GameObject smokeParticleObject = Instantiate(smokePrefab, transform.position, Quaternion.identity);
-        smokeParticleObject.transform.localScale /= transform.localScale.x; // adjust for enemy size
+        // smokeParticleObject.transform.localScale *= transform.localScale.x; // adjust for enemy size
+        smokeParticleObject.transform.localScale *= 2; // adjust for enemy size
         SmokeParticle smokeParticle = smokeParticleObject.GetComponent<SmokeParticle>();
 
         Color startColor = new Color(Random.Range(0.7f, 0.9f), Random.Range(0f, 0.3f), 0f);

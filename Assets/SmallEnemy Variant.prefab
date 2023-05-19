@@ -69,7 +69,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2636192451660129815, guid: a31e786b9b20aa549a603e3a4ad7d571, type: 3}
       propertyPath: maxHealth
-      value: 100
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 2636192451660129815, guid: a31e786b9b20aa549a603e3a4ad7d571, type: 3}
       propertyPath: initialVelocity

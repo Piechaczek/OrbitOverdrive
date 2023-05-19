@@ -47,6 +47,10 @@ public class Rocket : MonoBehaviour
     void OnCollisionEnter2D(Collision2D collision) {
         if (MainController.PLAYING){
             screenShake.endShake = Time.time + 0.1f;
+
+            if (rb.velocity.magnitude > 1) {
+                SoundController.INSTANCE.PlayHitClip(Mathf.Clamp(rb.velocity.magnitude / 150f, 0.1f, 1f));
+            }
         }
     }
 }

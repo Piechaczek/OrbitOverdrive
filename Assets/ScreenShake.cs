@@ -10,7 +10,7 @@ public class ScreenShake : MonoBehaviour
     void FixedUpdate() {
         if (Time.time < endShake) {
             // should shake
-            transform.position = new Vector3(Random.Range(-0.1f, 0.1f), Random.Range(-0.1f, 0.1f), -10f);
+            transform.position = new Vector3(Random.Range(-0.09f, 0.09f), Random.Range(-0.09f, 0.09f), -10f);
         } else {
             transform.position = new Vector3(0f, 0f, -10f);
         }
