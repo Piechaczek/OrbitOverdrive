@@ -127,8 +127,8 @@ public class UIManager : MonoBehaviour
             float progress = elapsed / startAnimationDuration;
 
             float delta = Screen.height * progress;
-            startPanel.offsetMax = new Vector2(Screen.width / 2f, Screen.height / 2f + delta);
-            startPanel.offsetMin = new Vector2(-Screen.width / 2f, -Screen.height / 2f + delta);
+            startPanel.offsetMax = new Vector2(0f, delta);
+            startPanel.offsetMin = new Vector2(0f, delta);
 
             scoreWidget.SetAlpha(progress);
             timeText.alpha = progress;
@@ -163,7 +163,7 @@ public class UIManager : MonoBehaviour
         startAnimationStartTime = Time.time;
         startAnimationDuration = 0.5f;
         quitHintText.alpha = 0;
-        tutorialHintText.alpha = 0;
+        // tutorialHintText.alpha = 0;
     }
 
     public void OnEndGame(float duaration) {
